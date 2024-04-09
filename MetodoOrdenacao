@@ -1,0 +1,139 @@
+
+package com.mycompany.trabbimpaulo;
+
+import java.util.Arrays;
+import java.util.Scanner;
+
+
+public class TrabBimPaulo {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        // pedi quantos vetores vai querer
+        System.out.print("Digite o tamanho do vetor: ");
+        int tamanho = scanner.nextInt();
+
+        int[] vetor = new int[tamanho];
+        //digitar os numeros que vc vai querer
+        System.out.println("Digite os " + tamanho + " números inteiros separados por espaço:");
+        for (int i = 0; i < tamanho; i++) {
+            vetor[i] = scanner.nextInt();
+        }
+
+      
+        System.out.print("Vetor original: ");
+        exibirVetor(vetor);
+
+        // Menu de opções
+        System.out.println("Escolha o método de ordenação:");
+        System.out.println("1 - Ordenação por inserção");
+        System.out.println("2 - Ordenação por seleção");
+        System.out.println("3 - Ordenação bolha");
+        int escolha = scanner.nextInt();
+
+        int[] copiaVetor = Arrays.copyOf(vetor, vetor.length); 
+
+        long tempoInicio = System.nanoTime(); 
+
+        //escholha qual metodo vai usar
+        switch (escolha) {
+            case 1 -> {
+                ordenacaoInsercao(copiaVetor);
+                System.out.print("Vetor ordenado por inserção: ");
+                exibirVetor(copiaVetor);
+            }
+            case 2 -> {
+                ordenacaoSelecao(copiaVetor);
+                System.out.print("Vetor ordenado por seleção: ");
+                exibirVetor(copiaVetor);
+            }
+            case 3 -> {
+                ordenacaoBolha(copiaVetor);
+                System.out.print("Vetor ordenado por bolha: ");
+                exibirVetor(copiaVetor);
+            }
+            default -> System.out.println("Opção inválida");
+        }
+
+        long tempoFim = System.nanoTime(); // finaliza a contagem do tempo de execução
+            ;
+           //conta para mostrar o tempode de execução
+        System.out.println("Tempo de execução do Programa inteiro : " + (tempoFim - tempoInicio) + " nanosegundos");
+
+// Compara os resultados dos três métodos de ordenação essa parte da de fude em :(
+       long tempoInicioInsercao = System.nanoTime(); 
+ordenacaoInsercao(copiaVetor);
+long tempoFimInsercao = System.nanoTime(); 
+long tempoExecucaoInsercao = tempoFimInsercao - tempoInicioInsercao;
+
+long tempoInicioSelecao = System.nanoTime(); 
+ordenacaoSelecao(copiaVetor);
+long tempoFimSelecao = System.nanoTime(); 
+long tempoExecucaoSelecao = tempoFimSelecao - tempoInicioSelecao;
+
+long tempoInicioBolha = System.nanoTime(); 
+ordenacaoBolha(copiaVetor);
+long tempoFimBolha = System.nanoTime(); 
+long tempoExecucaoBolha = tempoFimBolha - tempoInicioBolha;
+
+System.out.println("Tempo de execução da ordenação por inserção: " + tempoExecucaoInsercao + " nanosegundos");
+System.out.println("Tempo de execução da ordenação por seleção: " + tempoExecucaoSelecao + " nanosegundos");
+System.out.println("Tempo de execução da ordenação por bolha: " + tempoExecucaoBolha + " nanosegundos");
+
+
+       
+       
+      
+
+    }
+    //mostra o vetor 
+    public static void exibirVetor(int[] vetor) {
+        for (int i = 0; i < vetor.length; i++) {
+            System.out.print(vetor[i] + " ");
+        }
+        System.out.println();
+    }
+    //ordenacao de insercao 
+    public static void ordenacaoInsercao(int[] vetor) {
+    for (int i = 1; i < vetor.length; i++) {
+        for (int j = i; j > 0 && vetor[j] < vetor[j - 1]; j--) {
+            int temp = vetor[j];
+            vetor[j] = vetor[j - 1];
+            vetor[j - 1] = temp;
+        }
+    }
+    }
+    
+    
+    
+    //  faz ordenacao de Selecao
+   public static void ordenacaoSelecao(int[] vetor) {
+    for (int i = 0; i < vetor.length - 1; i++) {
+        int indiceMenor = i;
+        for (int j = i + 1; j < vetor.length; j++) {
+            if (vetor[j] < vetor[indiceMenor]) {
+                indiceMenor = j;
+            }
+        }
+        int temp = vetor[i];
+        vetor[i] = vetor[indiceMenor];
+        vetor[indiceMenor] = temp;
+    }
+}
+
+// chama a ordencao de bolha
+private static void ordenacaoBolha(int[] copiaVetorBolha) {
+    boolean houveTroca = true;
+    while (houveTroca) {
+        houveTroca = false;
+        for (int i = 0; i < copiaVetorBolha.length - 1; i++) {
+            if (copiaVetorBolha[i] > copiaVetorBolha[i+1]) {
+                int temp = copiaVetorBolha[i];
+                copiaVetorBolha[i] = copiaVetorBolha[i+1];
+                copiaVetorBolha[i+1] = temp;
+                houveTroca = true;
+            }
+        }
+    }
+}   
+}
